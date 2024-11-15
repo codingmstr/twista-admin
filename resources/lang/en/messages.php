@@ -5660,4 +5660,13 @@
   'رقم_الهاتف' => 'رقم الهاتف',
   'payment_method_updated_successfully' => 'Payment method updated successfully',
   'store_discount_cleared' => 'Store discount cleared',
+  'orders by Zone' => 'Orders by Zone',
+  'in' => 'In',
+  'Hello, ' => 'Hello, ',
+  'You Can Manage Your' => 'You Can Manage Your',
+  'Please, Enable or Create Module First' => 'Please, Enable or Create Module First',
+  'Pagination Navigation' => 'Pagination Navigation',
+  'Showing' => 'Showing',
+  'results' => 'Results',
+  'Go to page :page' => 'Go to page :page',
 );

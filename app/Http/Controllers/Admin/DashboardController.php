@@ -21,13 +21,13 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 
-class DashboardController extends Controller
-{
+class DashboardController extends Controller {
 
     public function __construct()
     {
         DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
     }
+    
     public function user_dashboard(Request $request)
     {
         $params = [
@@ -221,7 +221,9 @@ class DashboardController extends Controller
 
     public function dashboard(Request $request)
     {
+
         $params = [
+            'user_zone' => auth('admin')->user()->zone_id,
             'zone_id' => $request['zone_id'] ?? 'all',
             'module_id' => Config::get('module.current_module_id'),
             'statistics_type' => $request['statistics_type'] ?? 'overall',
@@ -240,7 +242,6 @@ class DashboardController extends Controller
             return redirect()->route('admin.business-settings.business-setup');
         }
         return view("admin-views.dashboard-{$module_type}", compact('data', 'total_sell', 'commission', 'delivery_commission', 'label','params','module_type'));
-
     }
 
     public function order(Request $request)
@@ -625,13 +626,12 @@ class DashboardController extends Controller
         return $data;
     }
 
+    public function dashboard_data($request) {
 
-    public function dashboard_data($request)
-    {
         $params = session('dash_params');
         if (!url()->current() == $request->is('admin/users')) {
-        $data_os = self::order_stats_calc($params['zone_id'], $params['module_id']);
-        $data_uo = self::user_overview_calc($params['zone_id'], $params['module_id']);
+            $data_os = self::order_stats_calc($params['zone_id'], $params['module_id']);
+            $data_uo = self::user_overview_calc($params['zone_id'], $params['module_id']);
         }
         $popular = Wishlist::with(['store'])
             ->whereHas('store')

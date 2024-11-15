@@ -7,33 +7,45 @@
 @endpush
 
 @section('content')
+
     <div class="content container-fluid">
-        @if(auth('admin')->user()->role_id == 1)
+
         <!-- Page Header -->
         <div class="page-header">
+
             <div class="row align-items-center py-2">
+
                 <div class="col-sm mb-2 mb-sm-0">
+
                     <div class="d-flex align-items-center">
+
                         <img src="{{asset('assets/admin/img/grocery.svg')}}" alt="img">
+
                         <div class="w-0 flex-grow pl-2">
                             <h1 class="page-header-title mb-0">{{translate('messages.welcome')}}, {{auth('admin')->user()->f_name}}.</h1>
                             <p class="page-header-text m-0">{{translate('messages.welcome_message')}}</p>
                         </div>
+
                     </div>
+
                 </div>
 
-                <div class="col-sm-auto min--280">
-                    <select name="zone_id" class="form-control js-select2-custom fetch_data_zone_wise">
-                        <option value="all">{{ translate('messages.All_Zones') }}</option>
-                        @foreach(\App\Models\Zone::orderBy('name')->get() as $zone)
-                            <option
-                                value="{{$zone['id']}}" {{$params['zone_id'] == $zone['id']?'selected':''}}>
-                                {{$zone['name']}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                @if(auth('admin')->user()->role_id == 1)
+                    <div class="col-sm-auto min--280">
+                        <select name="zone_id" class="form-control js-select2-custom fetch_data_zone_wise">
+                            <option value="all">{{ translate('messages.All_Zones') }}</option>
+                            @foreach(\App\Models\Zone::orderBy('name')->get() as $zone)
+                                <option
+                                    value="{{$zone['id']}}" {{$params['zone_id'] == $zone['id']?'selected':''}}>
+                                    {{$zone['name']}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+
             </div>
+
         </div>
         <!-- End Page Header -->
 
@@ -346,19 +358,9 @@
             </div>
 
         </div>
-        @else
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="row align-items-center">
-                <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">{{translate('messages.welcome')}}, {{auth('admin')->user()->f_name}}.</h1>
-                    <p class="page-header-text">{{translate('messages.employee_welcome_message')}}</p>
-                </div>
-            </div>
-        </div>
-        <!-- End Page Header -->
-        @endif
+        
     </div>
+
 @endsection
 
 @push('script')
@@ -371,7 +373,6 @@
     <!-- Apex Charts -->
 
 @endpush
-
 
 @push('script_2')
 
@@ -413,44 +414,43 @@
         chart = new ApexCharts(document.querySelector("#dognut-pie"), options);
         chart.render();
 
-    options = {
-          series: [{
-          name: 'Gross Sale',
-          data: [60, 40, 80, 31, 42, 109, 100, 50, 30, 80, 65, 35]
-        }],
-          chart: {
-          height: 350,
-          type: 'area',
-          toolbar: {
-            show:false
-        }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth',
-          width: 2,
-        },
-        fill: {
-            type: 'gradient',
-            colors: ['#76ffcd'],
-        },
-        xaxis: {
-        //   type: 'datetime',
-          categories: ["{{ translate('Jan') }}", "{{ translate('Feb') }}", "{{ translate('Mar') }}", "{{ translate('Apr') }}", "{{ translate('May') }}", "{{ translate('Jun') }}", "{{ translate('Jul') }}", "{{ translate('Aug') }}", "{{ translate('Sep') }}", "{{ translate('Oct') }}", "{{ translate('Nov') }}", "{{ translate('Dec') }}" ]
-        },
-        tooltip: {
-          x: {
-            format: 'dd/MM/yy HH:mm'
-          },
-        },
+        options = {
+            series: [{
+                name: 'Gross Sale',
+                data: [60, 40, 80, 31, 42, 109, 100, 50, 30, 80, 65, 35]
+                }],
+                chart: {
+                height: 350,
+                type: 'area',
+                toolbar: {
+                    show:false
+                }
+            },
+            dataLabels: {
+            enabled: false
+            },
+            stroke: {
+            curve: 'smooth',
+            width: 2,
+            },
+            fill: {
+                type: 'gradient',
+                colors: ['#76ffcd'],
+            },
+            xaxis: {
+            //   type: 'datetime',
+            categories: ["{{ translate('Jan') }}", "{{ translate('Feb') }}", "{{ translate('Mar') }}", "{{ translate('Apr') }}", "{{ translate('May') }}", "{{ translate('Jun') }}", "{{ translate('Jul') }}", "{{ translate('Aug') }}", "{{ translate('Sep') }}", "{{ translate('Oct') }}", "{{ translate('Nov') }}", "{{ translate('Dec') }}" ]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
         };
 
         chart = new ApexCharts(document.querySelector("#grow-sale-chart"), options);
         chart.render();
 
-    <!-- Dognut Pie Chart -->
         // INITIALIZATION OF CHARTJS
         // =======================================================
         Chart.plugins.unregister(ChartDataLabels);
@@ -567,4 +567,5 @@
             window.history.pushState('page2', 'Title', '{{url()->current()}}?' + params);
         }
     </script>
+
 @endpush

@@ -37,7 +37,7 @@ class Admin extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array
-     */
+    */
     protected $fillable = [
         'f_name',
         'l_name',
@@ -55,7 +55,7 @@ class Admin extends Authenticatable
      * The attributes that should be cast.
      *
      * @var array
-     */
+    */
     protected $casts = [
         'is_logged_in' => 'boolean',
     ];

@@ -647,7 +647,7 @@ class BusinessSettingsController extends Controller
         DB::table('business_settings')->updateOrInsert(['key' => 'delivery_charge_comission'], [
             'value' => $request['admin_comission_in_delivery_charge']
         ]);
-// dd( $request['commission_business_model']);
+        // dd( $request['commission_business_model']);
 
         if(!isset($request->subscription_business_model) && !isset($request->commission_business_model)){
             Toastr::error( translate('You_must_select_at_least_one_business_model_between_commission_and_subscription'));
@@ -2091,9 +2091,9 @@ class BusinessSettingsController extends Controller
             'value' => $request['projectId']
         ]);
 
-//        DB::table('business_settings')->updateOrInsert(['key' => 'push_notification_key'], [
-//            'value' => $request['push_notification_key']
-//        ]);
+        //        DB::table('business_settings')->updateOrInsert(['key' => 'push_notification_key'], [
+        //            'value' => $request['push_notification_key']
+        //        ]);
 
         DB::table('business_settings')->updateOrInsert(['key' => 'fcm_credentials'], [
             'value' => json_encode([
@@ -2623,59 +2623,59 @@ class BusinessSettingsController extends Controller
             ]);
         }
 
-//        $credentials=\App\CentralLogics\Helpers::get_business_settings('s3_credential');
-//        $config=\App\CentralLogics\Helpers::get_business_data('local_storage');
-//
-//        $s3Credentials = [
-//            'FILESYSTEM_DRIVER' => isset($config)?($config==0?'s3':'local'):'local',
-//            'AWS_ACCESS_KEY_ID' => $credentials['key'],
-//            'AWS_SECRET_ACCESS_KEY' => $credentials['secret'],
-//            'AWS_DEFAULT_REGION' => $credentials['region'],
-//            'AWS_BUCKET' => $credentials['bucket'],
-//            'AWS_URL' => $credentials['url'],
-//            'AWS_ENDPOINT' => $credentials['end_point']
-//        ];
+        //        $credentials=\App\CentralLogics\Helpers::get_business_settings('s3_credential');
+        //        $config=\App\CentralLogics\Helpers::get_business_data('local_storage');
+        //
+        //        $s3Credentials = [
+        //            'FILESYSTEM_DRIVER' => isset($config)?($config==0?'s3':'local'):'local',
+        //            'AWS_ACCESS_KEY_ID' => $credentials['key'],
+        //            'AWS_SECRET_ACCESS_KEY' => $credentials['secret'],
+        //            'AWS_DEFAULT_REGION' => $credentials['region'],
+        //            'AWS_BUCKET' => $credentials['bucket'],
+        //            'AWS_URL' => $credentials['url'],
+        //            'AWS_ENDPOINT' => $credentials['end_point']
+        //        ];
 
-//        // Load existing environment file into an array
-//        $envFile = file(base_path('.env'), FILE_IGNORE_NEW_LINES);
-//        $data = [];
-//        foreach ($envFile as $line) {
-//            if (!empty(trim($line))) {
-//                list($key, $value) = explode('=', $line, 2);
-//                $data[$key] = $value;
-//            } else {
-//                // Preserve empty lines
-//                $data[] = '';
-//            }
-//        }
-//
-//        // Update existing keys
-//        foreach ($s3Credentials as $key => $value) {
-//            if (isset($data[$key])) {
-//                // Update the value
-//                $data[$key] = $value;
-//            }
-//        }
-//
-//        // Append any new keys that were not present in the original file
-//        foreach ($s3Credentials as $key => $value) {
-//            if (!isset($data[$key])) {
-//                $data[$key] = $value;
-//            }
-//        }
-//
-//        // Write the updated environment file
-//        $lines = [];
-//        foreach ($data as $key => $value) {
-//            if (is_numeric($key)) {
-//                // Preserve empty lines
-//                $lines[] = '';
-//            } else {
-//                $lines[] = $key . '=' . $value;
-//            }
-//        }
-//
-//        file_put_contents(base_path('.env'), implode(PHP_EOL, $lines) . PHP_EOL);
+        //        // Load existing environment file into an array
+        //        $envFile = file(base_path('.env'), FILE_IGNORE_NEW_LINES);
+        //        $data = [];
+        //        foreach ($envFile as $line) {
+        //            if (!empty(trim($line))) {
+        //                list($key, $value) = explode('=', $line, 2);
+        //                $data[$key] = $value;
+        //            } else {
+        //                // Preserve empty lines
+        //                $data[] = '';
+        //            }
+        //        }
+        //
+        //        // Update existing keys
+        //        foreach ($s3Credentials as $key => $value) {
+        //            if (isset($data[$key])) {
+        //                // Update the value
+        //                $data[$key] = $value;
+        //            }
+        //        }
+        //
+        //        // Append any new keys that were not present in the original file
+        //        foreach ($s3Credentials as $key => $value) {
+        //            if (!isset($data[$key])) {
+        //                $data[$key] = $value;
+        //            }
+        //        }
+        //
+        //        // Write the updated environment file
+        //        $lines = [];
+        //        foreach ($data as $key => $value) {
+        //            if (is_numeric($key)) {
+        //                // Preserve empty lines
+        //                $lines[] = '';
+        //            } else {
+        //                $lines[] = $key . '=' . $value;
+        //            }
+        //        }
+        //
+        //        file_put_contents(base_path('.env'), implode(PHP_EOL, $lines) . PHP_EOL);
 
 
         Toastr::success(translate('messages.updated_successfully'));
@@ -6946,7 +6946,7 @@ class BusinessSettingsController extends Controller
     }
     
      public function doSendSms(Request $request){
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
           'vendor_ids'=>'required_without:customer_ids',
            'customer_ids'=>'required_without:vendor_ids',
             'message' => 'required',
@@ -6956,22 +6956,22 @@ class BusinessSettingsController extends Controller
         }
      
         
-         $customer_mobiles = User::find($request->customer_ids ?? [])->pluck('phone')->toArray();
-         $vendor_mobiles = Vendor::find($request->vendor_ids ?? [])->pluck('phone')->toArray();
+        $customer_mobiles = User::find($request->customer_ids ?? [])->pluck('phone')->toArray();
+        $vendor_mobiles = Vendor::find($request->vendor_ids ?? [])->pluck('phone')->toArray();
          
-         $mobiles = array_merge($customer_mobiles,$vendor_mobiles);
+        $mobiles = array_merge($customer_mobiles,$vendor_mobiles);
          
         $mobiles = array_values(array_filter($mobiles, function($value) {
-    return preg_match('/^01\d{9}$/', $value) || preg_match('/^\+201\d{9}$/', $value);
-            }));
+            return preg_match('/^01\d{9}$/', $value) || preg_match('/^\+201\d{9}$/', $value);
+        }));
             
-          $mobiles =   array_values(array_unique(array_map(function($value) {
-    return strpos($value, '+2') === 0 ? substr($value, 2) : $value;
-}, $mobiles)));
+        $mobiles =   array_values(array_unique(array_map(function($value) {
+            return strpos($value, '+2') === 0 ? substr($value, 2) : $value;
+        }, $mobiles)));
 
-     helpers::vodafoneSms($mobiles,$request->message);
+        helpers::vodafoneSms($mobiles,$request->message);
         
-return  true;
+        return  true;
   
     }
 
