@@ -17,7 +17,14 @@ class ConversationController extends Controller
 {
     public function list(Request $request)
     {
+
         $conversations = Conversation::with(['sender', 'receiver', 'last_message'])->WhereUserType('admin');
+
+        if ( auth('admin')->user()->role_id != 1 )
+        $conversations = Conversation::where('receiver_type', 'admin')->where('receiver_id', auth('admin')->user()->id)
+            ->with(['sender', 'receiver', 'last_message'])
+            ->WhereUserType('admin');
+
         if($request->query('key')) {
             $key = explode(' ', $request->get('key'));
             $conversations = $conversations->where(function($qu)use($key){

@@ -5669,4 +5669,7 @@
   'Showing' => 'Showing',
   'results' => 'Results',
   'Go to page :page' => 'Go to page :page',
+  'license_code_is_required' => 'License code is required',
+  'doamain_is_required' => 'Doamain is required',
+  'Invalid_license_code_or_unregistered_domain' => 'Invalid license code or unregistered domain',
 );

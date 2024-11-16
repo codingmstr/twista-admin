@@ -7,7 +7,9 @@
 @endpush
 
 @section('content')
+
     <div class="content container-fluid">
+
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-header-title"><i class="tio-filter-list"></i> {{translate('messages.stores')}} <span class="badge badge-soft-dark ml-2" id="itemCount">{{$stores->total()}}</span></h1>
@@ -60,24 +62,41 @@
             </div>
         </div>
         <!-- Resturent Card Wrapper -->
+
         <!-- Transaction Information -->
         <ul class="transaction--information text-uppercase">
             <li class="text--info">
                 <i class="tio-document-text-outlined"></i>
-                <div>
-                    @php($total_transaction = \App\Models\OrderTransaction::where('module_id', Config::get('module.current_module_id'))->count())
-                    @php($total_transaction = isset($total_transaction) ? $total_transaction : 0)
-                    <span>{{translate('messages.total_transactions')}}</span> <strong>{{$total_transaction}}</strong>
-                </div>
+                @if ( auth('admin')->user()->role_id == 1 )
+                    <div>
+                        @php($total_transaction = \App\Models\OrderTransaction::where('module_id', Config::get('module.current_module_id'))->count())
+                        @php($total_transaction = isset($total_transaction) ? $total_transaction : 0)
+                        <span>{{translate('messages.total_transactions')}}</span> <strong>{{$total_transaction}}</strong>
+                    </div>
+                @else
+                    <div>
+                        @php($total_transaction = \App\Models\OrderTransaction::where('module_id', Config::get('module.current_module_id'))->where('zone_id', auth('admin')->user()->zone_id)->count())
+                        @php($total_transaction = isset($total_transaction) ? $total_transaction : 0)
+                        <span>{{translate('messages.total_transactions')}}</span> <strong>{{$total_transaction}}</strong>
+                    </div>
+                @endif
             </li>
             <li class="seperator"></li>
             <li class="text--success">
                 <i class="tio-checkmark-circle-outlined success--icon"></i>
-                <div>
-                    @php($comission_earned = \App\Models\AdminWallet::sum('total_commission_earning'))
-                    @php($comission_earned = isset($comission_earned) ? $comission_earned : 0)
-                    <span>{{translate('messages.commission_earned')}}</span> <strong>{{\App\CentralLogics\Helpers::format_currency($comission_earned)}}</strong>
-                </div>
+                @if ( auth('admin')->user()->role_id == 1 )
+                    <div>
+                        @php($comission_earned = \App\Models\AdminWallet::sum('total_commission_earning'))
+                        @php($comission_earned = isset($comission_earned) ? $comission_earned : 0)
+                        <span>{{translate('messages.commission_earned')}}</span> <strong>{{\App\CentralLogics\Helpers::format_currency($comission_earned)}}</strong>
+                    </div>
+                @else
+                    <div>
+                        @php($comission_earned = \App\Models\AdminWallet::where('admin_id', auth('admin')->user()->id)->first()?->total_commission_earning ?? 0)
+                        @php($comission_earned = isset($comission_earned) ? $comission_earned : 0)
+                        <span>{{translate('messages.commission_earned')}}</span> <strong>{{\App\CentralLogics\Helpers::format_currency($comission_earned)}}</strong>
+                    </div>
+                @endif
             </li>
             <li class="seperator"></li>
             <li class="text--danger">
@@ -285,6 +304,7 @@
             <!-- End Table -->
         </div>
         <!-- End Card -->
+
     </div>
 
 @endsection

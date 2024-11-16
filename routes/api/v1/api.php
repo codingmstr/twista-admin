@@ -17,10 +17,11 @@ use App\CentralLogics\Helpers;
 */
 
 Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function () {
+
     Route::get('zone/list', 'ZoneController@get_zones');
     Route::get('zone/check', 'ZoneController@zonesCheck');
-
     Route::get('offline_payment_method_list', 'ConfigController@offline_payment_method_list');
+
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
         Route::post('sign-up', 'CustomerAuthController@register');
         Route::post('login', 'CustomerAuthController@login');
@@ -86,6 +87,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
 
     Route::post('newsletter/subscribe','NewsletterController@index');
     Route::get('landing-page', 'ConfigController@landing_page');
+    // Here...
     Route::get('react-landing-page', 'ConfigController@react_landing_page');
     Route::get('flutter-landing-page', 'ConfigController@flutter_landing_page');
 
@@ -314,7 +316,8 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
     Route::get('stores/details/{id}', 'StoreController@get_details');
 
     Route::group(['middleware'=>['module-check']], function(){
-        Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
+
+        Route::group(['prefix' => 'customer'], function () {
             Route::get('notifications', 'NotificationController@get_notifications');
             Route::get('info', 'CustomerController@info');
             Route::get('update-zone', 'CustomerController@update_zone');
@@ -365,7 +368,8 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
             Route::get('review-reminder-cancel', 'CustomerController@review_reminder_cancel');
 
         });
-        Route::group(['prefix' => 'customer', 'middleware' => 'apiGuestCheck'], function () {
+        Route::group(['prefix' => 'customer'], function () {
+
             Route::group(['prefix' => 'order'], function () {
                 Route::get('list', 'OrderController@get_order_list');
                 Route::get('running-orders', 'OrderController@get_running_orders');
@@ -382,6 +386,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
 
             });
 
+            // Here...
             Route::group(['prefix'=>'cart'], function() {
                 Route::get('list', 'CartController@get_carts');
                 Route::post('add', 'CartController@add_to_cart');

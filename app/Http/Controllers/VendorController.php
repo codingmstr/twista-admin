@@ -296,31 +296,30 @@ class VendorController extends Controller
         return to_route('restaurant.final_step');
     }
 
-public function back(Request $request){
-    $admin_commission= BusinessSetting::where('key','admin_commission')->first();
-    $business_name= BusinessSetting::where('key','business_name')->first();
-    $packages= SubscriptionPackage::where('status',1)->get();
-    return view('vendor-views.auth.register-step-2',[
-        'admin_commission'=> $admin_commission?->value,
-        'business_name'=> $business_name?->value,
-        'packages'=> $packages,
-        'store_id' => $request->store_id
-        ]);
-}
-
-
-public function final_step(Request $request){
-
-
-    $store_id= null;
-    $payment_status= null;
-    if($request?->store_id && is_string($request?->store_id)){
-        $data = explode('?', $request?->store_id);
-        $store_id = $data[0];
-        $payment_status = $data[1]  != 'flag=success' ? 'fail': 'success';
+    public function back(Request $request){
+        $admin_commission= BusinessSetting::where('key','admin_commission')->first();
+        $business_name= BusinessSetting::where('key','business_name')->first();
+        $packages= SubscriptionPackage::where('status',1)->get();
+        return view('vendor-views.auth.register-step-2',[
+            'admin_commission'=> $admin_commission?->value,
+            'business_name'=> $business_name?->value,
+            'packages'=> $packages,
+            'store_id' => $request->store_id
+            ]);
     }
 
-    return view('vendor-views.auth.register-complete',['store_id' =>$store_id,'payment_status'=> $payment_status]);
-}
+    public function final_step(Request $request){
+
+
+        $store_id= null;
+        $payment_status= null;
+        if($request?->store_id && is_string($request?->store_id)){
+            $data = explode('?', $request?->store_id);
+            $store_id = $data[0];
+            $payment_status = $data[1]  != 'flag=success' ? 'fail': 'success';
+        }
+
+        return view('vendor-views.auth.register-complete',['store_id' =>$store_id,'payment_status'=> $payment_status]);
+    }
 
 }

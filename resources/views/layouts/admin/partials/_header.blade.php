@@ -20,12 +20,14 @@
                 <!-- Navbar -->
                 <ul class="navbar-nav align-items-center flex-row flex-grow-1 __navbar-nav">
 
-                    <li class="nav-item __nav-item">
-                        <a href="{{ route('admin.users.dashboard')}}" id="tourb-6" class="__nav-link {{ Request::is('admin/users*') ? 'active' : '' }}">
-                            <img src="{{asset('assets/admin/img/new-img/user.svg')}}" alt="public/img">
-                            <span>{{ translate('Users')}}</span>
-                        </a>
-                    </li>
+                    @if(auth('admin')->user()->role_id == 1)
+                        <li class="nav-item __nav-item">
+                            <a href="{{ route('admin.users.dashboard')}}" id="tourb-6" class="__nav-link {{ Request::is('admin/users*') ? 'active' : '' }}">
+                                <img src="{{asset('assets/admin/img/new-img/user.svg')}}" alt="public/img">
+                                <span>{{ translate('Users')}}</span>
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item __nav-item">
                         <a href="{{ route('admin.transactions.store.withdraw_list')}}" id="tourb-7" class="__nav-link {{ Request::is('admin/transactions*') ? 'active' : '' }}">
@@ -98,13 +100,14 @@
                             </div>
                         </div>
                     </li>
+
                     @if (\App\CentralLogics\Helpers::module_permission_check('order'))
-                    <li class="nav-item __nav-item">
-                        <a href="{{ route('admin.dispatch.dashboard')}}" id="tourb-8" class="__nav-link {{ Request::is('admin/dispatch*') ? 'active' : '' }}">
-                            <img src="{{asset('assets/admin/img/new-img/dispatch.svg')}}" alt="public/img">
-                            <span>{{ translate('Dispatch Management')}}</span>
-                        </a>
-                    </li>
+                        <li class="nav-item __nav-item">
+                            <a href="{{ route('admin.dispatch.dashboard')}}" id="tourb-8" class="__nav-link {{ Request::is('admin/dispatch*') ? 'active' : '' }}">
+                                <img src="{{asset('assets/admin/img/new-img/dispatch.svg')}}" alt="public/img">
+                                <span>{{ translate('Dispatch Management')}}</span>
+                            </a>
+                        </li>
                     @endif
 
                     <li class="nav-item max-sm-m-0 ml-auto mr-lg-3">
@@ -117,6 +120,7 @@
                             @endif
                         </a>
                     </li>
+                    
                     <li class="nav-item max-sm-m-0">
                         <div class="hs-unfold">
                             <div>
@@ -153,7 +157,9 @@
                             </div>
                         </div>
                     </li>
+
                     @php($mod = \App\Models\Module::find(Config::get('module.current_module_id')))
+
                     <li class="nav-item __nav-item">
                         <a href="javascript:void(0)" class="__nav-link module--nav-icon" id="tourb-0">
                             @if ($mod)
@@ -220,6 +226,7 @@
                             @endif
                         </div>
                     </li>
+
                 </ul>
                 <!-- End Navbar -->
             </div>
